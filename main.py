@@ -24,7 +24,7 @@ PREDICTIVE_COLS = [
 ]  # filename used only to look at erros after prediction
 
 
-def preprocess_data(data_path, save_path="data/codeforce_dataset.csv"):
+def preprocess_data(data_path: str, save_path: str = "data/codeforce_dataset.csv"):
     codeforce_dataset = pd.DataFrame.from_dict(
         extract_fields_from_jsons(data_path), orient="columns"
     )
@@ -32,7 +32,7 @@ def preprocess_data(data_path, save_path="data/codeforce_dataset.csv"):
     save(codeforce_dataset, save_path)
 
 
-def train_and_eval_models(codeforce_dataset_path):
+def train_and_eval_models(codeforce_dataset_path: str):
     codeforce_dataset = pd.read_csv(codeforce_dataset_path)
 
     for tag in KEPT_TAGS:
@@ -57,7 +57,7 @@ def train_and_eval_models(codeforce_dataset_path):
     )
 
 
-def predict(dataset_path):
+def predict(dataset_path: str):
     codeforce_dataset = pd.read_csv(dataset_path)
 
     prediction_tools = PredictionTools()
@@ -67,7 +67,7 @@ def predict(dataset_path):
     return predicted_tags
 
 
-def evaluate(codeforce_dataset_path=None):
+def evaluate(codeforce_dataset_path: str = None):
     codeforce_dataset = pd.read_csv(codeforce_dataset_path)
 
     prediction_tools = PredictionTools()

@@ -1,4 +1,6 @@
 import joblib
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import precision_score, recall_score
 
 
@@ -15,7 +17,10 @@ KEPT_TAGS = [
 
 
 def make_prediction_on_zeros(
-    dataset, tag_to_consider_zero, model, feature_column="prob_desc_description"
+    dataset: pd.DataFrame,
+    tag_to_consider_zero: str,
+    model: RandomForestClassifier,
+    feature_column: str = "prob_desc_description",
 ):
     final_prediction = dataset[tag_to_consider_zero].copy()
 
@@ -38,7 +43,9 @@ class PredictionTools:
         self.proba_model = joblib.load("src/trained_models/probabilities_model.sav")
         self.math_model = joblib.load("src/trained_models/math_model.sav")
 
-    def predict(self, dataset, feature_column="prob_desc_description"):
+    def predict(
+        self, dataset: pd.DataFrame, feature_column: str = "prob_desc_description"
+    ):
         dataset["strings"] = self.string_model.predict(dataset[feature_column])
         dataset["number theory"] = make_prediction_on_zeros(
             dataset, tag_to_consider_zero="strings", model=self.nb_theory_model
@@ -62,7 +69,7 @@ class PredictionTools:
         return dataset
 
     def predict_without_simplification_logic(
-        self, dataset, feature_column="prob_desc_description"
+        self, dataset: pd.DataFrame, feature_column: str = "prob_desc_description"
     ):
         dataset["strings"] = self.string_model.predict(dataset[feature_column])
         dataset["number theory"] = self.nb_theory_model.predict(dataset[feature_column])
@@ -74,7 +81,9 @@ class PredictionTools:
         dataset["math"] = self.math_model.predict(dataset[feature_column])
         return dataset
 
-    def eval(self, dataset, labels, with_logic=True):
+    def eval(
+        self, dataset: pd.DataFrame, labels: pd.DataFrame, with_logic: bool = True
+    ):
         if with_logic:
             prediction = self.predict(dataset)
         else:

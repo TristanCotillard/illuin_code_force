@@ -29,7 +29,7 @@ PREDICTIVE_COLS = [
 ]  # filename used only to look at erros after prediction
 
 
-def build_test_set_equal_prop_per_tag(Y):
+def build_test_set_equal_prop_per_tag(Y: np.ndarray):
     extracted_indices = set()
     for rank_tag in range(len(KEPT_TAGS)):
         nb_sample_with_tag = sum(Y[:, rank_tag])
@@ -42,7 +42,9 @@ def build_test_set_equal_prop_per_tag(Y):
     return np.array(list(extracted_indices))
 
 
-def prepare_codeforce_train_test_datasets(codeforce_dataset, labels):
+def prepare_codeforce_train_test_datasets(
+    codeforce_dataset: pd.DataFrame, labels: pd.DataFrame
+):
     test_index = build_test_set_equal_prop_per_tag(labels)
     print(
         f"proportion of {len(test_index) / len(codeforce_dataset)} kept for testing models"
@@ -63,12 +65,12 @@ def prepare_codeforce_train_test_datasets(codeforce_dataset, labels):
 
 
 def evaluate_model_and_get_best_hyperparameters(
-    dataset,
-    tag_to_evaluate,
-    max_features_to_test,
+    dataset: pd.DataFrame,
+    tag_to_evaluate: str,
+    max_features_to_test: list[int],
     model=RandomForestClassifier(n_estimators=200, max_depth=5),
-    max_df=1.0,
-    min_df=5,
+    max_df: float | int = 1.0,
+    min_df: float | int = 5,
 ):
     all_corpus = dataset["prob_desc_description"]
     Y_binarized_tag = dataset[tag_to_evaluate]
@@ -128,11 +130,11 @@ def evaluate_model_and_get_best_hyperparameters(
 
 
 def train_one_model_on_tf_idf_features(
-    dataset,
-    tag_to_train,
-    best_max_feature=50,
-    max_df=1.0,
-    min_df=5,
+    dataset: pd.DataFrame,
+    tag_to_train: str,
+    best_max_feature: int = 50,
+    max_df: float | int = 1.0,
+    min_df: float | int = 5,
 ):
     # Train the final full model of string prediction
     all_corpus = dataset["prob_desc_description"]
@@ -154,7 +156,7 @@ def train_one_model_on_tf_idf_features(
     return make_pipeline(tdf_tag_vectorizer, model)
 
 
-def train_all_models(codeforce_training_dataset):
+def train_all_models(codeforce_training_dataset: pd.DataFrame):
     # Train string model
     string_best_max_features = evaluate_model_and_get_best_hyperparameters(
         codeforce_training_dataset, "strings", [5, 20, 50, 100, 150, 200, 250, 300]
