@@ -72,9 +72,16 @@ options:
 ```
 
 ```python
-python main.py --preprocess_data data/raw_data/  data/codeforce_dataset_bis.csv
+# preparing data from json to csv
+python main.py --preprocess_data data/raw_data/  data/codeforce_dataset.csv
+
+# training the models on the preprocessed csv (includes evaluation on a testing dataset)
 python main.py --train data/codeforce_dataset.csv
-python main.py --eval data/codeforce_dataset.csv  
+
+# evaluate a specific preprocessed dataset (models already fit and stored in src/trained_models)
+python main.py --eval data/codeforce_dataset.csv
+
+# run predictions on a specific preprocessed dataset (models already fit and stored in src/trained_models)
 python main.py --predict data/codeforce_dataset.csv
 ```
 
