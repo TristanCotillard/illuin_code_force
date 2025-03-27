@@ -42,9 +42,9 @@ On a hold-out testing set (never seen by any training model), the tag prediction
 | games | 1.00 | 0.74 | 0.85 |
 | probabilities | 0.92 | 0.73 | 0.81 |
 
-Proportion of problems entirely predicted correctly: 0.50
-Proportion of problems with at least one tag correctly predicted: 0.81
-Proportion of problems with at least one tag incorrectly predicted: 0.35
+- Proportion of problems entirely predicted correctly: 0.50
+- Proportion of problems with at least one tag correctly predicted: 0.81
+- Proportion of problems with at least one tag incorrectly predicted: 0.35
 
 
 ### Possible Extensions
