@@ -97,3 +97,23 @@ class PredictionTools:
             print(
                 f"{tag}: recall={recall:.2f}, precision={precision:.2f}, f1={f1_score:.2f}"
             )
+        print(
+            f"Number of problems completely correclty predicted: {(prediction[labels.columns] == labels[labels.columns]).all(axis=1).sum() / len(prediction)}"
+        )
+        print(
+            f"Number of problems with at least 1 tag correclty predicted: {((prediction[labels.columns].to_numpy() * labels[labels.columns].to_numpy()).sum(axis=1) >= 1).sum() / len(labels)}"
+        )
+        print(
+            f"Number of problems with at least 1 tag incorreclty predicted: {
+                (
+                    (
+                        prediction[labels.columns].to_numpy()
+                        - labels[labels.columns].to_numpy()
+                    )
+                    > 0
+                )
+                .any(axis=1)
+                .sum()
+                / len(labels)
+            }"
+        )

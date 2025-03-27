@@ -29,7 +29,7 @@ As of now, I didn't have time to go beyond td-idf features optimization and extr
 
 ### First results
 
-On a testing set (never seen by any training model), the tag prediction pipeline obtained the following scores:
+On a hold-out testing set (never seen by any training model), the tag prediction pipeline obtained the following scores:
 
 | Tag      | Precision | Recall | f1 score | 
 | -------- | --------- | ------ | -------- |
@@ -41,6 +41,11 @@ On a testing set (never seen by any training model), the tag prediction pipeline
 | geometry | 0.92 | 0.52 | 0.67 |
 | games | 1.00 | 0.74 | 0.85 |
 | probabilities | 0.92 | 0.73 | 0.81 |
+
+Proportion of problems entirely predicted correctly: 0.50
+Proportion of problems with at least one tag correctly predicted: 0.81
+Proportion of problems with at least one tag incorrectly predicted: 0.35
+
 
 ### Possible Extensions
 - add data augmentation / training penalties techniques in case of poor class representations like for instance the tag "probability"
